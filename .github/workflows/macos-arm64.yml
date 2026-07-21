@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    tags: ['v*']
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-macos-arm64:
@@ -26,3 +27,30 @@ jobs:
           path: release/FRONDA-Cover-Maker-macOS-ARM64.zip
           if-no-files-found: error
           retention-days: 30
+      - name: Publish GitHub pre-release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: true
+          generate_release_notes: false
+          name: FRONDA Cover Maker — macOS ARM64 Preview 1
+          body: |
+            ## FRONDA Cover Maker для macOS
+
+            Первый нативный выпуск для **Apple Silicon**. Акролликс довёл мастерскую FRONDA от идеи и визуального шаблона до самостоятельного приложения для Mac: с фирменной системой обложек, встроенным PSD-шаблоном и полноценной сборкой под M4.
+
+            ### Что внутри
+            - Нативная сборка **ARM64** для M1 / M2 / M3 / M4 и macOS 15.5+.
+            - Встроенный шаблон **FRONDA Prevyu 1920×1080** — не нужно искать исходный PSD перед началом работы.
+            - Переключатель между встроенным шаблоном и любым другим проверяемым PSD.
+            - Отдельные обложки для серий или одна обложка на весь выпуск.
+            - Режимы «ЭПИЗОД» и «ФИЛЬМ», экспорт PNG и папка «Готово» по умолчанию.
+            - Адаптивный интерфейс для мониторов и телевизоров, включая 4K при масштабировании 300%.
+
+            ### Установка
+            1. Скачайте `FRONDA-Cover-Maker-macOS-ARM64.zip`.
+            2. Распакуйте архив.
+            3. Переместите `FRONDA Cover Maker.app` в «Программы» и откройте приложение.
+
+            Это предварительный выпуск: он предназначен для проверки на реальных Mac и дальнейшей полировки мастерской.
+          files: release/FRONDA-Cover-Maker-macOS-ARM64.zip
