@@ -1,0 +1,28 @@
+name: Build macOS ARM64
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-macos-arm64:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'arm64'
+      - name: Build native .app
+        run: zsh scripts/build-macos.sh
+      - name: Upload macOS application
+        uses: actions/upload-artifact@v4
+        with:
+          name: FRONDA-Cover-Maker-macOS-ARM64
+          path: release/FRONDA-Cover-Maker-macOS-ARM64.zip
+          if-no-files-found: error
+          retention-days: 30

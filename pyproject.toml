@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fronda-cover-maker"
+version = "0.1.0"
+description = "Автономный генератор обложек FRONDA"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "PySide6==6.11.1",
+  "psd-tools==1.17.4",
+  "Pillow==12.3.0",
+  "fonttools==4.63.0",
+]
+
+[project.scripts]
+fronda-cover-maker = "fronda.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

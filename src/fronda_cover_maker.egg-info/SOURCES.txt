@@ -1,0 +1,17 @@
+pyproject.toml
+src/fronda/__init__.py
+src/fronda/adaptive.py
+src/fronda/controller.py
+src/fronda/main.py
+src/fronda/paths.py
+src/fronda/rendering.py
+src/fronda/settings.py
+src/fronda/template.py
+src/fronda_cover_maker.egg-info/PKG-INFO
+src/fronda_cover_maker.egg-info/SOURCES.txt
+src/fronda_cover_maker.egg-info/dependency_links.txt
+src/fronda_cover_maker.egg-info/entry_points.txt
+src/fronda_cover_maker.egg-info/requires.txt
+src/fronda_cover_maker.egg-info/top_level.txt
+tests/test_adaptive.py
+tests/test_rendering.py

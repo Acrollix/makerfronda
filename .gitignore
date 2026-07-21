@@ -1,0 +1,14 @@
+.venv/
+.venv-macos/
+.pytest_cache/
+__pycache__/
+build/
+build-macos/
+dist/
+release/
+release-macos/
+Готово/
+*.pyc
+*.png
+!resources/images/fronda_logo.png
+!resources/images/mascot_success.png
