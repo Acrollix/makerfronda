@@ -14,7 +14,7 @@ from .adaptive import DisplayProfile, ViewportMetrics, calculate_layout, screen_
 from .rendering import CoverRenderer, RenderError, RenderRequest, safe_filename, save_png_atomic
 from .settings import Settings, SettingsStore
 from .template import TemplateCompiler, TemplateError, TemplateProfile
-from .paths import app_data_dir, built_in_template_path, cache_dir, default_export_dir
+from .paths import app_data_dir, built_in_template_path, cache_dir, default_export_dir, is_macos_app_bundle_path
 
 
 class AppController(QObject):
@@ -35,7 +35,14 @@ class AppController(QObject):
         # the explicit `Готово` folder. A user-selected different folder is
         # preserved unchanged.
         saved_output = Path(self.settings.export_path) if self.settings.export_path else None
-        if not saved_output or saved_output.resolve() == default_output.parent.resolve():
+        if (
+            not saved_output
+            or saved_output.resolve() == default_output.parent.resolve()
+            or is_macos_app_bundle_path(saved_output)
+        ):
+            # Older macOS previews put «Готово» in the .app bundle. Finder can
+            # mount a downloaded app read-only through App Translocation, so
+            # migrate that obsolete location to the user-visible Pictures path.
             self.settings.export_path = str(default_output)
         else:
             # A rebuild replaces the portable release directory. Recreate the
